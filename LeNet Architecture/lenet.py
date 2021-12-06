@@ -11,9 +11,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 def LeNet5():
     """
-    Implementation of LeNet - 5 CNN architecture as in the original paper \n
-    Note: This function expects a 28x28 image \n
-    Conv -> AveragePooling -> Conv -> AveragePooling -> FC layer -> FC layer -> Softmax
+    Implementation of LeNet - 5 CNN architecture as in the original paper using the keras Functional API
+    ZeroPadding -> Conv2D -> AveragePooling -> Conv2D -> AveragePooling -> FC layer -> FC layer -> Softmax 
 
     Returns:
         leNet -- keras.Model() instance
@@ -38,11 +37,15 @@ def LeNet5():
 def fit(x_train, x_test, y_train, y_test, model, loss=tf.keras.losses.SparseCategoricalCrossentropy(), metrics=None, batch_size=32, epochs=10):
     """
     Inputs:
-        model -- \n
-        loss -- \n
-        metrics -- \n
-        batch_size -- \n
-        epochs -- \n
+        x_train -- training set features 
+        x_test -- testing set features 
+        y_train -- training set targets 
+        y_test -- testing set targets 
+        model -- keras.Model() instance 
+        loss -- cost function to be optimized
+        metrics -- metrics used to evaluate model 
+        batch_size -- size of minibatch 
+        epochs -- number of epochs 
 
     Outputs:
         history -- keras.callbacks.History instance
@@ -64,11 +67,14 @@ def fit(x_train, x_test, y_train, y_test, model, loss=tf.keras.losses.SparseCate
 
 def learning_curves(history, epochs=10):
     """
-    Plots the loss and accuracy for the training and validation datasets.
-
+    Plots the loss and accuracy curves for the training dataset
+    
     Inputs:
-        history -- keras.callbacks.History instance \n
-        epochs -- number of epochs \n
+        history -- keras.callbacks.History instance 
+        epochs -- number of epochs 
+    
+    Outputs:
+        learning curves 
     """
 
     loss = history.history['loss']
