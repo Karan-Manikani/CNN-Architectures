@@ -9,12 +9,13 @@ import matplotlib.pyplot as plt
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
-def LeNet5():
+def LeNet5(classes):
     """
     Implementation of LeNet - 5 CNN architecture as in the original paper using the keras Functional API
     ZeroPadding -> Conv2D -> AveragePooling -> Conv2D -> AveragePooling -> FC layer -> FC layer -> Softmax
 
     Returns:
+        classes -- number of output classes
         leNet -- keras.Model() instance
     """
 
@@ -24,10 +25,10 @@ def LeNet5():
     x = layers.AveragePooling2D(pool_size=(2, 2))(x)
     x = layers.Conv2D(filters=16, kernel_size=(5, 5), strides=(1, 1), padding='valid', activation='tanh')(x)
     x = layers.AveragePooling2D(pool_size=(2, 2))(x)
+    x = layers.Conv2D(filters=120, kernel_size=(5, 5), strides=(1, 1), padding='valid', activation='tanh')(x)
     x = layers.Flatten()(x)
-    x = layers.Dense(units=120, activation='tanh')(x)
     x = layers.Dense(units=84, activation='tanh')(x)
-    outputs = layers.Dense(units=10, activation='softmax')(x)
+    outputs = layers.Dense(units=classes, activation='softmax')(x)
     leNet = keras.Model(inputs=inputs, outputs=outputs)
     leNet.summary()
 
@@ -62,6 +63,7 @@ def fit(x_train, x_test, y_train, y_test, model, loss=tf.keras.losses.SparseCate
     history = model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs)
 
     # Evaluate model using test set
+    print('Evaluating model on test set...')
     model.evaluate(x_test, y_test, batch_size=batch_size)
 
     return history
