@@ -12,6 +12,6 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 x_train = x_train.astype('float32') / 255.0
 x_test = x_test.astype('float32') / 255.0
 
-model = lenet.LeNet5()
+model = lenet.LeNet5(classes=10)
 history = lenet.fit(x_train, x_test, y_train, y_test, model)
 lenet.learning_curves(history)
